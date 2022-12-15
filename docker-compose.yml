@@ -11,7 +11,8 @@ services:
     ports:
       - "15432:5432"
     volumes:
-      - ./dumps/init-db/001-create-db.sql:/docker-entrypoint-initdb.d/001-create-db.sql
+      #- ./dumps/init-db/001-create-db.sql:/docker-entrypoint-initdb.d/001-create-db.sql
+      - ./dumps/init-db:/docker-entrypoint-initdb.d
       - ./dumps:/var/lib/postgresql/data
     networks:
       pnet:
