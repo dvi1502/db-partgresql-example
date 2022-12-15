@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  postgres:
+    restart: always
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "test"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "1234"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "15432:5432"
+    volumes:
+      - ./dumps/init-db/001-create-db.sql:/docker-entrypoint-initdb.d/001-create-db.sql
+      - ./dumps:/var/lib/postgresql/data
+    networks:
+      pnet:
+        ipv4_address: 172.18.0.6
+
+networks:
+  pnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
+volumes:
+  pgdata:
+    driver: local
